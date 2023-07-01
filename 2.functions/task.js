@@ -19,7 +19,7 @@ function getArrayParams(...arr) {
   // Вычисление среднего значения и округление до двух знаков после запятой
   const avg = (sum / arr.length).toFixed(2);
 
-  return { min, max, avg: Number(avg) };
+  return { min, max, avg: Number(avg) }; 
 }
 
 // Тесты для задачи 1
