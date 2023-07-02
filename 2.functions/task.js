@@ -4,42 +4,69 @@
 
 // Функция для получения параметров массива
 function getArrayParams(...arr) {
-  let min = Infinity;
-  let max = -Infinity;
-  let sum = 0;
+	let min = Infinity;
+	let max = -Infinity;
+	let sum = 0;
 
-  // Поиск минимального, максимального значения и вычисление суммы элементов
-  for (let i = 0; i < arr.length; i++) {
-    const element = arr[i];
-    min = Math.min(min, element);
-    max = Math.max(max, element);
-    sum += element;
-  }
+	// Поиск минимального, максимального значения и вычисление суммы элементов
+	for (let i = 0; i < arr.length; i++) {
+		const element = arr[i];
+		min = Math.min(min, element);
+		max = Math.max(max, element);
+		sum += element;
+	}
 
-  // Вычисление среднего значения и округление до двух знаков после запятой
-  const avg = (sum / arr.length).toFixed(2);
+	// Вычисление среднего значения и округление до двух знаков после запятой
+	const avg = (sum / arr.length).toFixed(2);
 
-  return { min, max, avg: Number(avg) }; 
+	return {
+		min,
+		max,
+		avg: Number(avg)
+	};
 }
 
 // Тесты для задачи 1
 function testGetArrayParams() {
-  const testCases = [
-    { arr: [-99, 99, 10], expected: { min: -99, max: 99, avg: 3.33 } },
-    { arr: [1, 2, 3, -100, 10], expected: { min: -100, max: 10, avg: -16.80 } },
-    { arr: [5], expected: { min: 5, max: 5, avg: 5.00 } },
-  ];
+	const testCases = [{
+			arr: [-99, 99, 10],
+			expected: {
+				min: -99,
+				max: 99,
+				avg: 3.33
+			}
+		},
+		{
+			arr: [1, 2, 3, -100, 10],
+			expected: {
+				min: -100,
+				max: 10,
+				avg: -16.80
+			}
+		},
+		{
+			arr: [5],
+			expected: {
+				min: 5,
+				max: 5,
+				avg: 5.00
+			}
+		},
+	];
 
-  console.log("// Тесты для задачи 1: Исследовать массив");
+	console.log("// Тесты для задачи 1: Исследовать массив");
 
-  for (let i = 0; i < testCases.length; i++) {
-    const { arr, expected } = testCases[i];
-    const result = getArrayParams(...arr);
-    console.log(`Test Case ${i + 1}:`, result);
-    console.log("Expected:", expected);
-    console.log("Pass:", JSON.stringify(result) === JSON.stringify(expected));
-    console.log("-----------------------");
-  }
+	for (let i = 0; i < testCases.length; i++) {
+		const {
+			arr,
+			expected
+		} = testCases[i];
+		const result = getArrayParams(...arr);
+		console.log(`Test Case ${i + 1}:`, result);
+		console.log("Expected:", expected);
+		console.log("Pass:", JSON.stringify(result) === JSON.stringify(expected));
+		console.log("-----------------------");
+	}
 }
 
 console.log("Задача 1: Исследовать массив");
@@ -49,62 +76,62 @@ testGetArrayParams();
 
 // Функция для суммирования элементов массива
 function summElementsWorker(...arr) {
-  if (arr.length === 0) {
-    return 0;
-  }
+	if (arr.length === 0) {
+		return 0;
+	}
 
-  return arr.reduce((sum, num) => sum + num, 0);
+	return arr.reduce((sum, num) => sum + num, 0);
 }
 
 // Функция для вычисления разницы максимального и минимального элементов массива
 function differenceMaxMinWorker(...arr) {
-  if (arr.length === 0) {
-    return 0;
-  }
+	if (arr.length === 0) {
+		return 0;
+	}
 
-  const max = Math.max(...arr);
-  const min = Math.min(...arr);
+	const max = Math.max(...arr);
+	const min = Math.min(...arr);
 
-  return max - min;
+	return max - min;
 }
 
 // Функция для вычисления разницы сумм чётных и нечётных элементов массива
 function differenceEvenOddWorker(...arr) {
-  if (arr.length === 0) {
-    return 0;
-  }
+	if (arr.length === 0) {
+		return 0;
+	}
 
-  let sumEvenElement = 0;
-  let sumOddElement = 0;
+	let sumEvenElement = 0;
+	let sumOddElement = 0;
 
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i] % 2 === 0) {
-      sumEvenElement += arr[i];
-    } else {
-      sumOddElement += arr[i];
-    }
-  }
+	for (let i = 0; i < arr.length; i++) {
+		if (arr[i] % 2 === 0) {
+			sumEvenElement += arr[i];
+		} else {
+			sumOddElement += arr[i];
+		}
+	}
 
-  return sumEvenElement - sumOddElement;
+	return sumEvenElement - sumOddElement;
 }
 
 // Функция для вычисления среднего значения чётных элементов массива
 function averageEvenElementsWorker(...arr) {
-  if (arr.length === 0) {
-    return 0;
-  }
+	if (arr.length === 0) {
+		return 0;
+	}
 
-  let sumEvenElement = 0;
-  let countEvenElement = 0;
+	let sumEvenElement = 0;
+	let countEvenElement = 0;
 
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i] % 2 === 0) {
-      sumEvenElement += arr[i];
-      countEvenElement++;
-    }
-  }
+	for (let i = 0; i < arr.length; i++) {
+		if (arr[i] % 2 === 0) {
+			sumEvenElement += arr[i];
+			countEvenElement++;
+		}
+	}
 
-  return countEvenElement === 0 ? 0 : sumEvenElement / countEvenElement;
+	return countEvenElement === 0 ? 0 : sumEvenElement / countEvenElement;
 }
 
 // Тесты для задачи 2
@@ -143,40 +170,40 @@ console.log("-----------------------");
 
 // Функция для выполнения преобразования над массивом
 function makeWork(arrOfArr, func) {
-  // Проверяем, является ли arrOfArr массивом и имеет ли он элементы
-  if (!Array.isArray(arrOfArr) || arrOfArr.length === 0) {
-    return null;
-  }
+	// Проверяем, является ли arrOfArr массивом и имеет ли он элементы
+	if (!Array.isArray(arrOfArr) || arrOfArr.length === 0) {
+		return null;
+	}
 
-  let maxWorkerResult = -Infinity;
+	let maxWorkerResult = -Infinity;
 
-  // Итерируемся по каждому подмассиву в arrOfArr
-  for (const arr of arrOfArr) {
-    // Проверяем, является ли arr подмассивом и имеет ли он элементы
-    if (!Array.isArray(arr) || arr.length === 0) {
-      continue;
-    }
+	// Итерируемся по каждому подмассиву в arrOfArr
+	for (const arr of arrOfArr) {
+		// Проверяем, является ли arr подмассивом и имеет ли он элементы
+		if (!Array.isArray(arr) || arr.length === 0) {
+			continue;
+		}
 
-    // Выполняем функцию func с аргументами из arr
-    const result = func(...arr);
+		// Выполняем функцию func с аргументами из arr
+		const result = func(...arr);
 
-    // Обновляем максимальное значение, если полученный результат больше текущего максимального значения
-    if (result > maxWorkerResult) {
-      maxWorkerResult = result;
-    }
-  }
+		// Обновляем максимальное значение, если полученный результат больше текущего максимального значения
+		if (result > maxWorkerResult) {
+			maxWorkerResult = result;
+		}
+	}
 
-  // Возвращаем максимальное значение
-  return maxWorkerResult;
+	// Возвращаем максимальное значение
+	return maxWorkerResult;
 }
 
 console.log("Задача 3: Агрегатор преобразователей");
 
 const arr = [
-  [10, 10, 11, 20, 10],
-  [67, 10, 2, 39, 88],
-  [72, 75, 51, 87, 43],
-  [30, 41, 55, 96, 62],
+	[10, 10, 11, 20, 10],
+	[67, 10, 2, 39, 88],
+	[72, 75, 51, 87, 43],
+	[30, 41, 55, 96, 62],
 ];
 
 // Насадка суммирования значений
