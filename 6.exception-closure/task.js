@@ -1,155 +1,123 @@
-﻿// Задача 1. Форматтер чисел
+﻿// Задача 1: Форматтер чисел
 
-function parseCount(value) {
-    const parsedValue = Number.parseFloat(value);
-    if (isNaN(parsedValue)) {
-      throw new Error("Невалидное значение");
-    }
-    return parsedValue;
+// Функция для парсинга числа
+function parseCount(num) {
+  let parsedNum = Number.parseFloat(num);
+
+  if (Number.isNaN(parsedNum)) {
+    throw new Error("Невалидное значение");
+  } else {
+    return parsedNum;
   }
-  
-  function validateCount(value) {
-    try {
-      return parseCount(value);
-    } catch (error) {
-      throw error;
-    }
+}
+
+// Функция для валидации числа
+function validateCount(num) {
+  try {
+    return parseCount(num);
+  } catch (error) {
+    return error; // Возвращаем объект ошибки без изменений
   }
-  
-  // Тесты для функции parseCount
-  function testParseCount() {
-    try {
-      const result1 = parseCount("123");
-      if (result1 === 123) {
-        console.log("Тест 'parseCount' 1 пройден");
-      } else {
-        console.error("Тест 'parseCount' 1 не пройден: неверный результат");
-      }
-    } catch (error) {
-      console.error("Тест 'parseCount' 1 не пройден:", error.message);
-    }
-  
-    try {
-      const result2 = parseCount("012");
-      if (result2 === 12) {
-        console.log("Тест 'parseCount' 2 пройден");
-      } else {
-        console.error("Тест 'parseCount' 2 не пройден: неверный результат");
-      }
-    } catch (error) {
-      console.error("Тест 'parseCount' 2 не пройден:", error.message);
+}
+
+// Задача 2: Треугольник
+
+// Класс Triangle для создания треугольника
+class Triangle {
+  constructor(a, b, c) {
+    // Проверяем существование треугольника
+    if (a + b <= c || a + c <= b || b + c <= a) {
+      throw new Error("Треугольник с такими сторонами не существует");
+    } else {
+      this.a = a;
+      this.b = b;
+      this.c = c;
     }
   }
-  
-  // Тесты для функции validateCount
-  function testValidateCount() {
-    try {
-      const result3 = validateCount("56.65");
-      if (result3 === 56.65) {
-        console.log("Тест 'validateCount' 1 пройден");
-      } else {
-        console.error("Тест 'validateCount' 1 не пройден: неверный результат");
-      }
-    } catch (error) {
-      console.error("Тест 'validateCount' 1 не пройден:", error.message);
-    }
-  
-    try {
-      parseCount("ыфва");
-      console.error("Тест 'validateCount' 2 не пройден: ожидалась ошибка");
-    } catch (error) {
-      if (error.message === "Невалидное значение") {
-        console.log("Тест 'validateCount' 2 пройден");
-      } else {
-        console.error("Тест 'validateCount' 2 не пройден: неверное сообщение об ошибке");
-      }
-    }
+
+  // Геттер для вычисления периметра треугольника
+  get perimeter() {
+    let p = this.a + this.b + this.c;
+    return p;
   }
-  
-  // Запуск тестов
-  testParseCount();
-  testValidateCount();
-  
-  // Задача 2. Треугольник
-  
-  // Определяем класс Triangle
-  class Triangle {
-    constructor(side1, side2, side3) {
-      this.side1 = side1; // Длина первой стороны треугольника
-      this.side2 = side2; // Длина второй стороны треугольника
-      this.side3 = side3; // Длина третьей стороны треугольника
-  
-      // Проверяем существование треугольника
-      if (!this.isValidTriangle()) {
-        throw new Error("Треугольник с такими сторонами не существует");
-      }
-    }
-  
-    // Метод для проверки существования треугольника
-    isValidTriangle() {
-      const { side1, side2, side3 } = this;
-      return side1 + side2 > side3 && side2 + side3 > side1 && side1 + side3 > side2;
-    }
-  
-    // Геттер для вычисления периметра треугольника
-    get perimeter() {
-      return this.side1 + this.side2 + this.side3;
-    }
-  
-    // Геттер для вычисления площади треугольника
-    get area() {
-      const { side1, side2, side3 } = this;
-      const semiPerimeter = this.perimeter / 2;
-      const area = Math.sqrt(semiPerimeter * (semiPerimeter - side1) * (semiPerimeter - side2) * (semiPerimeter - side3));
-      return parseFloat(area.toFixed(3));
-    }
+
+  // Геттер для вычисления площади треугольника
+  get area() {
+    let p = (this.a + this.b + this.c) / 2;
+    let ar =
+      Math.round(
+        1000 * Math.sqrt(p * (p - this.a) * (p - this.b) * (p - this.c)) +
+          Number.EPSILON
+      ) / 1000;
+    return ar;
   }
-  
-  // Функция для получения треугольника
-  function getTriangle(side1, side2, side3) {
-    try {
-      return new Triangle(side1, side2, side3);
-    } catch (error) {
-      // Если исключение было перехвачено, возвращаем объект с сообщением об ошибке
-      return {
-        perimeter: "Ошибка! Треугольник не существует",
-        area: "Ошибка! Треугольник не существует"
-      };
-    }
+}
+
+// Функция для получения треугольника
+function getTriangle(a, b, c) {
+  try {
+    let triangle = new Triangle(a, b, c);
+    return triangle;
+  } catch (error) {
+    let errorObj = {
+      get perimeter() {
+        return "Ошибка! Треугольник не существует";
+      },
+      get area() {
+        return "Ошибка! Треугольник не существует";
+      },
+    };
+    return errorObj;
   }
-  
-  // Тесты
-  function testTriangle() {
-    try {
-      const triangle1 = new Triangle(1, 3, 3);
-      console.log(triangle1.perimeter); // 7
-      console.log(triangle1.area); // 1.479
-  
-      const triangle2 = new Triangle(2, 5, 5);
-      console.log(triangle2.perimeter); // 12
-      console.log(triangle2.area); // 4.899
-  
-      const triangle3 = new Triangle(6, 10, 15);
-      console.log(triangle3.perimeter); // 31
-      console.log(triangle3.area); // 20.123
-  
-      const triangle4 = new Triangle(1, 3, 100); // Ошибка: Треугольник с такими сторонами не существует
-    } catch (error) {
-      console.error(error.message);
-    }
+}
+
+// Тесты
+
+// Тесты для задачи 1
+function testParseCount() {
+  const validNum = "123";
+  const invalidNum = "abc";
+
+  try {
+    console.log(parseCount(validNum)); // Ожидаемый результат: 123
+    console.log(parseCount(invalidNum)); // Ожидаемый результат: Error: Невалидное значение
+  } catch (error) {
+    console.error(error);
   }
-  
-  function testGetTriangle() {
-    const triangle1 = getTriangle(2, 5, 5);
-    console.log(triangle1.perimeter); // 12
-    console.log(triangle1.area); // 4.899
-  
-    const triangle2 = getTriangle(1, 3, 100);
-    console.log(triangle2.perimeter); // Ошибка! Треугольник не существует
-    console.log(triangle2.area); // Ошибка! Треугольник не существует
+}
+
+function testValidateCount() {
+  const validNum = "123";
+  const invalidNum = "abc";
+
+  try {
+    console.log(validateCount(validNum)); // Ожидаемый результат: 123
+    console.log(validateCount(invalidNum)); // Ожидаемый результат: Error: Невалидное значение
+  } catch (error) {
+    console.error(error);
   }
-  
-  testTriangle();
-  testGetTriangle();
-  
-  
+}
+
+// Тесты для задачи 2
+function testTriangle() {
+  const triangle1 = getTriangle(1, 3, 3);
+  console.log(triangle1.perimeter); // Ожидаемый результат: 7
+  console.log(triangle1.area); // Ожидаемый результат: 1.479
+
+  const triangle2 = getTriangle(2, 5, 5);
+  console.log(triangle2.perimeter); // Ожидаемый результат: 12
+  console.log(triangle2.area); // Ожидаемый результат: 4.899
+
+  const triangle3 = getTriangle(6, 10, 15);
+  console.log(triangle3.perimeter); // Ожидаемый результат: 31
+  console.log(triangle3.area); // Ожидаемый результат: 20.123
+
+  const triangle4 = getTriangle(1, 3, 100);
+  console.log(triangle4.perimeter); // Ожидаемый результат: "Ошибка! Треугольник не существует"
+  console.log(triangle4.area); // Ожидаемый результат: "Ошибка! Треугольник не существует"
+}
+
+// Запуск тестов
+testParseCount();
+testValidateCount();
+testTriangle();
